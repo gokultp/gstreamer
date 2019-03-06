@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"net/http"
 	"os"
 
@@ -17,6 +18,7 @@ func main() {
 	}
 	err := dbmodels.InitDBConnection()
 	if err != nil {
+		fmt.Println(err)
 		panic(err)
 	}
 	router := routes.InitRoutes()
