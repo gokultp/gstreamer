@@ -24,10 +24,10 @@
 
 ```
 
-1. Frondend will authenticate and hit backend with a selected streaer user name & Connect one WS connection with backend.
+1. Frondend will authenticate and request backend with a selected streamer's username & create one WS connection with backend.
 2. Backend will keep that WS conn live
 3. Backend will subscribe events using twitch API and listen for hooks
-4. Backend sends events data through WS conn to FrondEnd
+4. Backend sends events data through WS conn to FrondEnd once it get some event callback.
 
 
 
@@ -36,21 +36,20 @@
 ### Bottlenecks and Challenges Identified
 1. Number of possible socket connections to a machine is having a hardlimit. So there are limitations to scale the system vertically.
 2. If we scale horizontally, we should ensure that the server consuming callbacks for a user should have WS connection.
-3. If we have X users, then we will have to expect a factor * X number of events, that factor can be 100X or 1000x or even bigger. Handling that much callbacks will be tremendous task.
-4. If we have to cache the events in our db, it will dumb billions of rows into db evey day, will eventually slow dowm the queries
+3. If we have N users, then we will have to expect a factor * N number of events, that factor can be 100X or 1000x or even bigger. Handling that much callbacks will be a huge task.
+4. If we have to cache the events in our db, it will dumb millions of rows into db evey day, will eventually slow dowm the queries
 
 
 
 ### Solutions
-1. Will have to split REST APIs and WebSocket APIs into different services and should keep different clusers for that.
+1. Will have to split REST APIs and WebSocket APIs into different services and should keep different clusers for both.
 2. An Apllication load ballancer can be used to  distribute load into machines in REST API cluster.
 3. Will have to write a custom orchastrator to manage Machines in Websocket clusetr.
 4. A Pub/Sub system will be needed to communicate events came as REST API callbacks to relevant Websocket machines.It can be implemented using Apache Kafka. REST service will be publishing events to kafka with topic as streamer id once it get some event webhook.
    At the same time, One of the machines in Websockets cluster will be always keeping a WS connection with frontend clents. It will be always listening for events for that user's favourite streamer id as topic and it will push data to clients through WS connection once it get some event through Kafka. 
 5.  For DB volume issue, will have to plan proper sharding based on data inserion patterns. The shard can be for every month's data or every week's data. Also archiving old irrelevant data can be planned.
 
-### Websocket Orchestrator
-1. 
+
 
 ```
                                               +-------------------------------+
