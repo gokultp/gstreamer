@@ -48,7 +48,7 @@ func GetAuthToken(code string) (*contracts.AuthToken, errors.IError) {
 	clientID := os.Getenv(envTwitchClientID)
 	clientSecret := os.Getenv(envTwitchClientSecret)
 	params.Set(authFieldGrantType, twitchGrantType)
-	params.Set(authFieldRedirectURI, twitchRedirectURL)
+	params.Set(authFieldRedirectURI, os.Getenv(envHost)+twitchRedirectURL)
 	params.Set(authFieldClientID, clientID)
 	params.Set(authFieldClientSecret, clientSecret)
 	params.Set(authFieldCode, code)
