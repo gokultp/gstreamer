@@ -17,7 +17,7 @@ class MainPage extends Component{
    
     
     componentDidMount(){
-        var socket = new WebSocket("ws://localhost:8080/socket");
+        var socket = new WebSocket("ws://142.93.145.74/socket");
         this.color=this.getColor(this.props.user.fav_streamer_name)
         console.log(this.color)
         socket.onmessage =  (e) =>{
