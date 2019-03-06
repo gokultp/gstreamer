@@ -17,10 +17,11 @@ const (
 	twitchAuthURL         = "https://id.twitch.tv/oauth2/authorize"
 	twitchTokenURL        = "https://id.twitch.tv/oauth2/token"
 	twitchResponseType    = "code"
-	twitchRedirectURL     = "http://localhost:8080/auth/cb"
+	twitchRedirectURL     = "/auth/cb"
 	twitchGrantType       = "authorization_code"
 	envTwitchClientID     = "TWITCH_CLIENT_ID"
 	envTwitchClientSecret = "TWITCH_CLIENT_SECRET"
+	envHost               = "HOST"
 	authFieldRedirectURI  = "redirect_uri"
 	authFieldClientID     = "client_id"
 	authFieldClientSecret = "client_secret"
@@ -36,7 +37,7 @@ func GetAuthRedirectURL() string {
 	clientID := os.Getenv(envTwitchClientID)
 	params.Set(authFieldScope, twitchScopes)
 	params.Set(authFieldResponseType, twitchResponseType)
-	params.Set(authFieldRedirectURI, twitchRedirectURL)
+	params.Set(authFieldRedirectURI, os.Getenv(envHost)+twitchRedirectURL)
 	params.Set(authFieldClientID, clientID)
 	authURL.RawQuery = params.Encode()
 	return authURL.String()
