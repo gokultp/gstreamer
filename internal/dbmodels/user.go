@@ -3,7 +3,6 @@ package dbmodels
 import (
 	"github.com/gokultp/gstreamer/internal/serviceerrors"
 	"github.com/gokultp/gstreamer/pkg/errors"
-	"gopkg.in/jinzhu/gorm.v1"
 )
 
 const (
@@ -13,13 +12,15 @@ const (
 
 // User is the gorm model for user object
 type User struct {
-	gorm.Model
-	ID          *uint64 `gorm:"column:id"`
-	Name        *string `gorm:"column:name"`
-	Email       *string `gorm:"column:email"`
-	DisplayName *string `gorm:"column:display_name"`
-	Logo        *string `gorm:"column:logo"`
-	FavStreamer *string `gorm:"column:fav_streamer"`
+	ID              *uint64 `gorm:"column:id;primary_key"`
+	Name            *string `gorm:"column:name"`
+	Email           *string `gorm:"column:email"`
+	DisplayName     *string `gorm:"column:display_name"`
+	Logo            *string `gorm:"column:logo"`
+	FavStreamer     *uint64 `gorm:"column:fav_streamer"`
+	FavStreamerName *string `gorm:"column:fav_streamer_name"`
+	AccessToken     *string `gorm:"column:access_token"`
+	RefreshToken    *string `gorm:"column:refresh_token"`
 }
 
 func NewUser(id uint64, name, email, displayName, logo string) *User {
@@ -42,6 +43,13 @@ func GetUserByID(id uint64) (*User, errors.IError) {
 
 func (u *User) CreateUser() errors.IError {
 	if err := Connection.Create(u).Error; err != nil {
+		return serviceerrors.DBUpdateError(err.Error())
+	}
+	return nil
+}
+
+func (u *User) UpdateUser() errors.IError {
+	if err := Connection.Model(u).Updates(u).Error; err != nil {
 		return serviceerrors.DBUpdateError(err.Error())
 	}
 	return nil

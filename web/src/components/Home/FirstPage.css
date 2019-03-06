@@ -1,0 +1,29 @@
+.first-page{
+    align-content: center;
+    text-align: center;
+    padding-top: 20vh;
+}
+
+.form-a{
+ margin-top: 10vh;
+}
+
+.events{
+    padding: 15px;
+    padding-left: 25px;
+    background-color: rgb(13, 43, 59);
+    font-size: 14px;
+    color:#ffffff;
+    
+}
+
+.nav{
+    background-color: #320c7e;
+    margin: 0px;
+    top:0px;
+    padding:25px;
+}
+
+hr{
+    background: #aaa;
+}

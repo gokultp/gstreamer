@@ -9,3 +9,21 @@
 ## Webscoket Endpoints
 1. /live
 2. /events
+
+
+
+
+
+
+## Architecture of Current System
+
+```
+                           Selects streamer                              Subscribe hooks
++----------------------+                     +------------------------+                    +--------------------------+
+|                      +-------------------> |                        +------------------->+                          |
+| Front End Service    |                     | Backend  Service       |                    |   Twitch API             |
+|                      | <-------------------+                        | <------------------+                          |
++----------------------+   events through    +------------------------+   Webhook hits     +--------------------------+
+                           Websockets
+
+```

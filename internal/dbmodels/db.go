@@ -7,6 +7,7 @@ import (
 	"github.com/gokultp/gstreamer/internal/serviceerrors"
 	"github.com/gokultp/gstreamer/pkg/errors"
 
+	_ "github.com/jinzhu/gorm/dialects/postgres"
 	"gopkg.in/jinzhu/gorm.v1"
 )
 
@@ -19,7 +20,7 @@ const (
 )
 
 // Connection is the singleton maintained for db connection
-var Connection gorm.DB
+var Connection *gorm.DB
 
 // InitDBConnection will initialises a db connection
 func InitDBConnection() errors.IError {
@@ -28,10 +29,13 @@ func InitDBConnection() errors.IError {
 	user := os.Getenv(envDBUser)
 	password := os.Getenv(envDBPassword)
 	dbName := os.Getenv(envDBNAME)
-	Connection, err := gorm.Open("postgres", fmt.Sprintf("host=%s port=%s user=%s dbname=%s password=%s", host, port, user, dbName, password))
+	conn, err := gorm.Open("postgres", fmt.Sprintf("host=%s port=%s user=%s dbname=%s password=%s", host, port, user, dbName, password))
 	if err != nil {
 		return serviceerrors.DBConectionError(err.Error())
 	}
+	conn.AutoMigrate(&User{})
+	Connection = conn
+
 	return nil
 
 }
