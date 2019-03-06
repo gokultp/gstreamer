@@ -9,7 +9,7 @@ class Login extends Component{
             <div className='login-page'>
                 <div className='login-form-cont'>
                     <h2>Gstreamer</h2>
-                    <a href="http://localhost:8080/auth">
+                    <a href="http://http://142.93.145.74/auth">
                     <span className='login-btn'>
                         Login
                         <img src={tw} className='login-img'/>
