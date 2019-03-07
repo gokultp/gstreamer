@@ -47,7 +47,7 @@
 3. Will have to write a custom orchastrator to manage Machines in Websocket clusetr.
 4. A Pub/Sub system will be needed to communicate events came as REST API callbacks to relevant Websocket machines.It can be implemented using Apache Kafka. REST service will be publishing events to kafka with topic as streamer id once it get some event webhook.
    At the same time, One of the machines in Websockets cluster will be always keeping a WS connection with frontend clents. It will be always listening for events for that user's favourite streamer id as topic and it will push data to clients through WS connection once it get some event through Kafka. 
-5.  For DB volume issue, will have to plan proper sharding based on data inserion patterns. The shard can be for every month's data or every week's data. Also archiving old irrelevant data can be planned.
+5.  For DB volume issue, will have to plan proper partitions and sharding based on data inserion patterns. The partition can be for every month's data or every week's data. Also archiving old irrelevant data can be planned.
 
 
 
