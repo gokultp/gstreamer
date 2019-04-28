@@ -1,7 +1,6 @@
 # Gstreamer
 
-`Demo URL`: http://142.93.145.74/
-
+An App integrated to twitch to get live streams and live events of your favourite streamer with a live chat option
 ## Architecture of Current System
 
 
